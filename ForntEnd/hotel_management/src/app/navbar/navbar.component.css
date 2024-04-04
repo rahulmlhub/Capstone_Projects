@@ -1,0 +1,24 @@
+.navbar {
+    background-color: #4143d4; /* Set background color */
+    color: #fff; /* Set text color */
+    padding: 10px 20px; /* Add padding */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Align items horizontally */
+    align-items: center; /* Align items vertically */
+  }
+  
+  .navbar img {
+    max-width: 100px; /* Set maximum width for the logo */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .navbar a {
+    color: #fff; /* Set text color for links */
+    text-decoration: none; /* Remove default underline */
+    margin-left: 20px; /* Add margin between links */
+  }
+  
+  .navbar a:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+  

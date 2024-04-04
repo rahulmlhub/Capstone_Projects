@@ -1,5 +1,6 @@
 package com.metlife.hotel.controller;
 
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,9 @@ import com.metlife.hotel.service.HotelService;
 
 import java.util.List;
 
+/**
+ * @author Admin
+ */
 @RestController
 @RequestMapping("/api/hotels")
 public class HotelController {
@@ -23,7 +27,7 @@ public class HotelController {
     }
 
     @PostMapping
-    public ResponseEntity<HotelDTO> createHotel(@RequestBody HotelDTO hotelDTO) {
+    public ResponseEntity<HotelDTO> createHotel(@Valid @RequestBody HotelDTO hotelDTO) {
         logger.info("Creating a new hotel");
         HotelDTO createdHotel = hotelService.createHotel(hotelDTO);
         logger.info("Hotel created successfully with ID: {}", createdHotel.getHotelId());
@@ -31,7 +35,7 @@ public class HotelController {
     }
 
     @PutMapping("/{hotelId}")
-    public ResponseEntity<HotelDTO> updateHotel(@PathVariable String hotelId, @RequestBody HotelDTO hotelDTO) {
+    public ResponseEntity<HotelDTO> updateHotel(@PathVariable String hotelId, @Valid @RequestBody HotelDTO hotelDTO) {
         logger.info("Updating hotel with ID: {}", hotelId);
         HotelDTO updatedHotel = hotelService.updateHotel(hotelId, hotelDTO);
         logger.info("Hotel updated successfully with ID: {}", hotelId);
