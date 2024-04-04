@@ -1,12 +1,64 @@
 package com.metlife.hotel.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.metlife.hotel.payload.HotelDTO;
+import com.metlife.hotel.service.HotelService;
 
-/**
- * @author Admin
- */
+import java.util.List;
+
 @RestController
-@RequestMapping
+@RequestMapping("/api/hotels")
 public class HotelController {
+
+    private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
+
+    private final HotelService hotelService;
+
+    public HotelController(HotelService hotelService) {
+        this.hotelService = hotelService;
+    }
+
+    @PostMapping
+    public ResponseEntity<HotelDTO> createHotel(@RequestBody HotelDTO hotelDTO) {
+        logger.info("Creating a new hotel");
+        HotelDTO createdHotel = hotelService.createHotel(hotelDTO);
+        logger.info("Hotel created successfully with ID: {}", createdHotel.getHotelId());
+        return new ResponseEntity<>(createdHotel, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{hotelId}")
+    public ResponseEntity<HotelDTO> updateHotel(@PathVariable String hotelId, @RequestBody HotelDTO hotelDTO) {
+        logger.info("Updating hotel with ID: {}", hotelId);
+        HotelDTO updatedHotel = hotelService.updateHotel(hotelId, hotelDTO);
+        logger.info("Hotel updated successfully with ID: {}", hotelId);
+        return ResponseEntity.ok(updatedHotel);
+    }
+
+    @GetMapping("/{hotelId}")
+    public ResponseEntity<HotelDTO> getHotelById(@PathVariable String hotelId) {
+        logger.info("Fetching hotel with ID: {}", hotelId);
+        HotelDTO hotelDTO = hotelService.getHotelById(hotelId);
+        logger.info("Hotel fetched successfully with ID: {}", hotelId);
+        return ResponseEntity.ok(hotelDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<HotelDTO>> getAllHotels() {
+        logger.info("Fetching all hotels");
+        List<HotelDTO> hotels = hotelService.getAllHotel();
+        logger.info("Fetched {} hotels", hotels.size());
+        return ResponseEntity.ok(hotels);
+    }
+
+    @DeleteMapping("/{hotelId}")
+    public ResponseEntity<Void> deleteHotelById(@PathVariable String hotelId) {
+        logger.info("Deleting hotel with ID: {}", hotelId);
+        hotelService.deleteHotelById(hotelId);
+        logger.info("Hotel deleted successfully with ID: {}", hotelId);
+        return ResponseEntity.noContent().build();
+    }
 }

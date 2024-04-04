@@ -19,6 +19,9 @@ import javax.persistence.Id;
 public class Facility {
 
     @Id
-    private String guestId;
+    private String facilityId;
+    private String name;
+    private String description;
 
+    // Getters and setters
 }

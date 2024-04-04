@@ -1,8 +1,9 @@
 package com.metlife.hotel.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
+
 
 /**
  * @author Admin
@@ -24,6 +25,7 @@ public class Hotel {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "rating")
-    private Double rating;
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
 }

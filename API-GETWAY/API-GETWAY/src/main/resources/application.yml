@@ -1,0 +1,32 @@
+server:
+  port: 8087
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
+spring:
+  application:
+    name: API-GATEWAY
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: HOTEL-SERVICE
+#          uri: lb://HOTEL-SERVICE
+#          predicates:
+#            - Path=/hotel/**
+##          filters:
+##            - RewritePath=/example/(?<path>.*), /$\{path}
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+
+
+cloud:
+  gateway:
+    routes:
+      - id: HOTEL-SERVICE
+        uri: lb://HOTEL-SERVICE
+        predicates:
+          - Path=/hotel/hi

@@ -21,5 +21,10 @@ public class Review {
 
     @Id
     private String reviewId;
+    private String bookingId;
+    private String guestId;
+    private int rating;
+    private String comment;
 
+    // Getters and setters
 }
