@@ -1,1 +1,22 @@
-<p>review works!</p>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Review ID</th>
+                <th>Booking ID</th>
+                <th>Guest ID</th>
+                <th>Rating</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let review of reviewsList">
+                <td>{{ review.reviewId}}</td>
+                <td>{{ review.guestId }}</td>
+                <td>{{ review.bookingId}}</td>
+                <td>{{ review.rating }}</td>
+                <td>{{ review.comment}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

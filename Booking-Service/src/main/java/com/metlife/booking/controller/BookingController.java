@@ -1,6 +1,7 @@
 package com.metlife.booking.controller;
 
 import com.metlife.booking.payload.BookingDTO;
+import com.metlife.booking.payload.BookingResponse;
 import com.metlife.booking.service.BookingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookingController {
 
     private static final Logger logger = LoggerFactory.getLogger(BookingController.class);
@@ -22,7 +24,7 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<BookingDTO> createBooking(@RequestBody BookingDTO bookingDTO) {
         logger.info("Creating a new booking");
         BookingDTO createdBooking = bookingService.createBooking(bookingDTO);
@@ -30,7 +32,7 @@ public class BookingController {
         return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{bookingId}")
+    @PutMapping("/update/{bookingId}")
     public ResponseEntity<BookingDTO> updateBooking(@PathVariable String bookingId, @RequestBody BookingDTO bookingDTO) {
         logger.info("Updating booking with ID: {}", bookingId);
         BookingDTO updatedBooking = bookingService.updateBooking(bookingId, bookingDTO);
@@ -47,19 +49,19 @@ public class BookingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookingDTO>> getAllBookings() {
+    public ResponseEntity<List<BookingResponse>> getAllBookings() {
         logger.info("Fetching all bookings");
-        List<BookingDTO> bookings = bookingService.getAllBookings();
+        List<BookingResponse> bookings = bookingService.getAllBookings();
         logger.info("Fetched {} bookings", bookings.size());
         return ResponseEntity.ok(bookings);
     }
 
-    @DeleteMapping("/{bookingId}")
-    public ResponseEntity<Void> deleteBookingById(@PathVariable String bookingId) {
+    @DeleteMapping("/delete/{bookingId}")
+    public ResponseEntity<String> deleteBookingById(@PathVariable String bookingId) {
         logger.info("Deleting booking with ID: {}", bookingId);
         bookingService.deleteBookingById(bookingId);
         logger.info("Booking deleted successfully with ID: {}", bookingId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Booking deleted successfully with ID:"+bookingId);
     }
 }
 

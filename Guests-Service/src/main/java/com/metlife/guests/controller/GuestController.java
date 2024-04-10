@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/guests")
+@CrossOrigin(origins = "http://localhost:4200")
 public class GuestController {
 
     private static final Logger logger = LoggerFactory.getLogger(GuestController.class);
@@ -22,7 +23,7 @@ public class GuestController {
         this.guestService = guestService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<GuestDTO> createGuest(@RequestBody GuestDTO guestDTO) {
         logger.info("Creating a new guest");
         GuestDTO createdGuest = guestService.createGuest(guestDTO);
@@ -30,7 +31,7 @@ public class GuestController {
         return new ResponseEntity<>(createdGuest, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{guestId}")
+    @PutMapping("/update/{guestId}")
     public ResponseEntity<GuestDTO> updateGuest(@PathVariable String guestId, @RequestBody GuestDTO guestDTO) {
         logger.info("Updating guest with ID: {}", guestId);
         GuestDTO updatedGuest = guestService.updateGuest(guestId, guestDTO);
@@ -54,12 +55,12 @@ public class GuestController {
         return ResponseEntity.ok(guests);
     }
 
-    @DeleteMapping("/{guestId}")
-    public ResponseEntity<Void> deleteGuestById(@PathVariable String guestId) {
+    @DeleteMapping("/delete/{guestId}")
+    public ResponseEntity<String> deleteGuestById(@PathVariable String guestId) {
         logger.info("Deleting guest with ID: {}", guestId);
         guestService.deleteGuestById(guestId);
         logger.info("Guest deleted successfully with ID: {}", guestId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Guest deleted successfully with ID:"+guestId);
     }
 }
 

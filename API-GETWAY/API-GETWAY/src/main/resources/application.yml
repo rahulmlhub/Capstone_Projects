@@ -8,25 +8,43 @@ logging:
 spring:
   application:
     name: API-GATEWAY
-#  cloud:
-#    gateway:
-#      routes:
-#        - id: HOTEL-SERVICE
-#          uri: lb://HOTEL-SERVICE
-#          predicates:
-#            - Path=/hotel/**
-##          filters:
-##            - RewritePath=/example/(?<path>.*), /$\{path}
+  cloud:
+    gateway:
+      routes:
+        - id: ADMINISTRATOR-SERVICE
+          uri: lb://ADMINISTRATOR-SERVICE
+          predicates:
+            - Path=/api/users/**, /api/**
+#          filters:
+#            - AuthenticationFilter
+
+        - id: HOTEL-SERVICE
+          uri: lb://HOTEL-SERVICE
+          predicates:
+            - Path=/api/hotels/**
+#          filters:
+#           - AuthenticationFilter
+
+        - id: GUEST-SERVICE
+          uri: lb://GUEST-SERVICE
+          predicates:
+            - Path=/api/guests/**
+#          filters:
+#           - AuthenticationFilter
+        - id: REVIEW-SERVICE
+          uri: lb://REVIEW-SERVICE
+          predicates:
+            - Path=/api/reviews/**
+        #          filters:
+        #            - AuthenticationFilter
+        - id: BOOKING-SERVICE
+          uri: lb://BOOKING-SERVICE
+          predicates:
+            - Path=/api/bookings/**
+        #          filters:
+        #            - AuthenticationFilter
+
 eureka:
   client:
     fetch-registry: true
     register-with-eureka: true
-
-
-cloud:
-  gateway:
-    routes:
-      - id: HOTEL-SERVICE
-        uri: lb://HOTEL-SERVICE
-        predicates:
-          - Path=/hotel/hi

@@ -7,6 +7,8 @@ import lombok.Data;
  */
 @Data
 public class GuestDTO {
+
+
     private String guestId;
     private String name;
     private String email;

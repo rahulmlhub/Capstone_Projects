@@ -1,0 +1,47 @@
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Booking Id</th>
+                <th>Hotel Name</th>
+                <th>Guest Name</th>
+                <th>Number Of Guest</th>
+                <th>Check In Date</th>
+                <th>Check Out Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let booking of bookingLists">
+                <tr *ngIf="!booking.isEditing; else editRow">
+                    <td>{{ booking.bookingId }}</td>
+                    <td>{{ booking.hotelName }}</td>
+                    <td>{{ booking.guestName }}</td>
+                    <td>{{ booking.numberOfGuest }}</td>
+                    <td>{{ booking.checkIn | date }}</td>
+                    <td>{{ booking.checkOut | date }}</td>
+                    <td>
+                        <button (click)="toggleEdit(booking)" class="btn btn-primary btn-sm">Edit</button>
+                        &nbsp;
+                        <button (click)="deleteBooking(booking.bookingId)" class="btn btn-primary btn-sm">Delete</button>
+                    </td>
+                </tr>
+                <ng-template #editRow>
+                    <tr>
+                        <td><input type="text" [(ngModel)]="booking.bookingId" disabled ></td>
+                        <td><input type="text" [(ngModel)]="booking.hotelId" disabled></td>
+                        <td><input type="text" [(ngModel)]="booking.guestId" disabled></td>
+                        <td><input type="text" [(ngModel)]="booking.numberOfGuest"></td>
+                        <td><input type="date" [(ngModel)]="booking.checkIn"></td>
+                        <td><input type="date" [(ngModel)]="booking.checkOut"></td>
+                        <td>
+                            <button (click)="updateBooking(booking)" class="btn btn-primary btn-sm">Save</button>
+                            &nbsp;
+                            <button (click)="cancelEdit(booking)" class="btn btn-primary btn-sm">Cancel</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,36 @@
+/* hotel-list.component.css */
+.hotel-list {
+    padding: 20px;
+    width: 30%;
+    display: grid;
+  }
+  
+  .hotel {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .hotel h2 {
+    margin-top: 0;
+  }
+  
+  .hotel p {
+    margin: 5px 0;
+  }
+  
+  .hotel ul {
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+  
+  .hotel ul li {
+    list-style-type: none;
+  }
+
+  .hotel-box{
+padding: 10px 20px;
+  }
+  

@@ -1,1 +1,22 @@
-<p>guest works!</p>
+<div>
+  <table class="table">
+      <thead>
+          <tr>
+              <th>Guest ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Aadhar Number</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let guest of guests">
+              <td>{{ guest.guestId }}</td>
+              <td>{{ guest.name }}</td>
+              <td>{{ guest.email }}</td>
+              <td>{{ guest.phoneNumber }}</td>
+              <td>{{ guest.aadharNumber }}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>

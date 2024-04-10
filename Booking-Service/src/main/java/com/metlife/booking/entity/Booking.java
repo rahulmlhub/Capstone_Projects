@@ -1,12 +1,11 @@
 package com.metlife.booking.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.time.LocalDate;
 
 /**
@@ -20,9 +19,11 @@ import java.time.LocalDate;
 public class Booking {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private String bookingId;
     private String guestId;
     private String hotelId;
+    private int numberOfGuest;
     private LocalDate checkIn;
     private LocalDate checkOut;
 

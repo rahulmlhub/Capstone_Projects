@@ -1,21 +1,39 @@
 package com.metlife.hotel.payload;
-
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-
 /**
  * @author Admin
  */
-@Data
-    public class HotelDTO {
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-        private String hotelId;
-        @NotNull
-        private String name;
-         @NotNull
-        private String address;
-        @NotNull
-        private String phoneNumber;
+import java.util.Set;
 
-        // Getters and setters
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class HotelDTO {
+
+    @NotBlank
+    private String hotelId;
+
+    @NotBlank
+    private String name;
+
+    @NotBlank
+    private String address;
+
+    private String phoneNumber;
+
+    private Set<FacilityDTO> facilities;
+
+    public HotelDTO(String hotelId, String name, String address, String phoneNumber) {
+        this.hotelId = hotelId;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
     }
+}

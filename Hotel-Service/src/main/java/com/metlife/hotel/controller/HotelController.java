@@ -16,6 +16,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/hotels")
+@CrossOrigin(origins = "http://localhost:4200")
 public class HotelController {
 
     private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
@@ -26,7 +27,7 @@ public class HotelController {
         this.hotelService = hotelService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<HotelDTO> createHotel(@Valid @RequestBody HotelDTO hotelDTO) {
         logger.info("Creating a new hotel");
         HotelDTO createdHotel = hotelService.createHotel(hotelDTO);
@@ -34,7 +35,7 @@ public class HotelController {
         return new ResponseEntity<>(createdHotel, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{hotelId}")
+    @PutMapping("/update/{hotelId}")
     public ResponseEntity<HotelDTO> updateHotel(@PathVariable String hotelId, @Valid @RequestBody HotelDTO hotelDTO) {
         logger.info("Updating hotel with ID: {}", hotelId);
         HotelDTO updatedHotel = hotelService.updateHotel(hotelId, hotelDTO);
@@ -58,11 +59,17 @@ public class HotelController {
         return ResponseEntity.ok(hotels);
     }
 
-    @DeleteMapping("/{hotelId}")
+    @DeleteMapping("/delete/{hotelId}")
     public ResponseEntity<Void> deleteHotelById(@PathVariable String hotelId) {
         logger.info("Deleting hotel with ID: {}", hotelId);
         hotelService.deleteHotelById(hotelId);
         logger.info("Hotel deleted successfully with ID: {}", hotelId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/withFacilities")
+    public ResponseEntity<List<HotelDTO>> getAllHotelsWithFacilities() {
+        List<HotelDTO> hotelDTOs = hotelService.getAllHotelWithFacility();
+        return new ResponseEntity<>(hotelDTOs, HttpStatus.OK);
     }
 }

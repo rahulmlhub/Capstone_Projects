@@ -17,9 +17,31 @@
   }
   
   .home-container img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+  /* marquee.component.css */
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee p {
+  display: inline-block;
+  padding-left: 100%; /* Ensures the text starts offscreen */
+  animation: marquee 5s linear infinite; /* Change animation duration as needed */
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
   

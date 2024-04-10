@@ -1,0 +1,12 @@
+spring:
+  application:
+     name:
+      ADMINISTRATOR-SERVICE
+
+server:
+  port :8080
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
