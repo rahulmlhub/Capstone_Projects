@@ -1,12 +1,12 @@
 spring:
   application:
-     name:
-      ADMINISTRATOR-SERVICE
-
-server:
-  port :8080
+    name: IDENTITY-SERVICE
 
 eureka:
   client:
-    fetch-registry: true
-    register-with-eureka: true
+    service-url:
+      defaultZone : http://localhost:8761/eureka/
+
+
+server:
+  port: 8088

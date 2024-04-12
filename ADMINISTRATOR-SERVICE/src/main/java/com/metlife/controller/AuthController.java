@@ -1,80 +1,41 @@
 package com.metlife.controller;
 
-import com.metlife.payload.JwtRequest;
-import com.metlife.payload.JwtResponse;
-import com.metlife.security.JwtHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.metlife.dto.AuthRequest;
+import com.metlife.entity.UserCredential;
+import com.metlife.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/auth")
 public class AuthController {
+    @Autowired
+    private AuthService service;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private AuthenticationManager manager;
-
-
-    @Autowired
-    private JwtHelper helper;
-
-    private Logger logger = LoggerFactory.getLogger(AuthController.class);
-
-
-    @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
-
-        this.doAuthenticate(request.getEmail(), request.getPassword());
-
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-        String token = this.helper.generateToken(userDetails);
-
-        JwtResponse response = JwtResponse
-                .builder()
-                .jwtToken(token)
-                .username(userDetails.getUsername()).build();
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    @PostMapping("/register")
+    public String addNewUser(@RequestBody UserCredential user) {
+        return service.saveUser(user);
     }
 
-    private void doAuthenticate(String email, String password) {
-
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
-        try {
-            manager.authenticate(authentication);
-
-
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(" Invalid Username or Password  !!");
+    @PostMapping("/token")
+    public String getToken(@RequestBody AuthRequest authRequest) {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        if (authenticate.isAuthenticated()) {
+            return service.generateToken(authRequest.getUsername());
+        } else {
+            throw new RuntimeException("invalid access");
         }
-
     }
-
 
     @GetMapping("/validate")
     public String validateToken(@RequestParam("token") String token) {
-        helper.validateToken(token);
+        service.validateToken(token);
         return "Token is valid";
     }
-    @GetMapping("/hello")
-    public String say(){
-        return "Hello";
-    }
-
-    @ExceptionHandler(BadCredentialsException.class)
-    public String exceptionHandler() {
-        return "Credentials Invalid !!";
-    }
-
 }

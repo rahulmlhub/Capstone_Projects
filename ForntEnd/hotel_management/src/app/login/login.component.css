@@ -1,95 +1,14 @@
 .login-container {
-    width: 300px;
-    height: 400px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Center content vertically */
-    transform: scale(0.9);
-    transition: transform 0.3s ease-in-out;
-    position: absolute; /* Position it in the center of the screen */
-    top: 50%; /* Move it down by 50% of the screen height */
-    left: 50%; /* Move it right by 50% of the screen width */
-    transform: translate(-50%, -50%); /* Center it precisely */
-  }
-  
-  /* .login-container:hover {
-    transform: scale(1);
-  } */
-  
-  
-  .login-container h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #3f51b5;
-  }
-  
-  .login-container label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
-    color: #333;
-  }
-  
-  .login-container input[type="text"],
-  .login-container input[type="password"] {
-    width: 80%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    color: #333;
-    margin-bottom: 15px;
-  }
-  
-  .login-container button {
-    width: 80%;
-    padding: 10px;
-    background-color: #3f51b5;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  .login-container button:hover {
-    background-color: #223194;
-  }
-  
-  /* Add some hotel-themed images */
-  .login-container::before,
-  .login-container::after {
-    content: "";
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  
-  .login-container::before {
-    top: -50px;
-    left: -50px;
-    width: 200px;
-    height: 200px;
-    background-image: url('https://example.com/images/hotel-1.jpg');
-  }
-  
-  .login-container::after {
-    bottom: -50px;
-    right: -50px;
-    width: 200px;
-    height: 200px;
-    background-image: url('https://example.com/images/hotel-2.jpg');
-  }
-  
-  .login-container form {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
+  background-image: url('src/assets/login_background.jpg'); /* Replace 'path_to_your_image.jpg' with the actual path to your image */
+  background-size: cover; /* Cover the entire container with the background image */
+  background-position: center; /* Center the background image */
+  height: 81vh; /* Set the height of the container to full viewport height */
+  display: flex; /* Use flexbox for centering content vertically */
+  align-items: center; /* Center content vertically */
+}
+
+.login-box {
+  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the login box */
+  padding: 20px; /* Add padding to the login box */
+  border-radius: 10px; /* Add border radius for rounded corners */
+}

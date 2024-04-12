@@ -1,14 +1,14 @@
 <!-- hotel-list.component.html -->
-<div class="hotel-box">
-        <h1>Hotels</h1>
+<div>
+        <h6>Hotels</h6>
         <div class="row">
-        <div class="col-md-4" *ngFor="let hotel of hotels">
+        <div class="col-md-3" *ngFor="let hotel of hotels">
           <section class="hotel">
-            <h2>{{ hotel.name }}</h2>
+            <h6>{{ hotel.name }}</h6>
             <p>Address: {{ hotel.address }}</p>
             <p>Phone Number: {{ hotel.phoneNumber }}</p>
             <div *ngIf="hotel.facilities && hotel.facilities.length > 0">
-              <h4>Facilities:</h4>
+              <h6>Facilities:</h6>
               <ul>
                 <li *ngFor="let facility of hotel.facilities">{{ facility.name }}</li>
               </ul>

@@ -1,0 +1,27 @@
+/* .container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-top: 10px;
+    padding-left: 250%;
+} */
+.delete-icon {
+    color: red;
+}
+
+.btn{
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.box-form{
+    width: 30%;
+    border-right: 1px solid white;
+    margin-right: 5px;
+}
+.list-box{
+    width: 70%;
+}
+.box{
+    display: flex;
+}
