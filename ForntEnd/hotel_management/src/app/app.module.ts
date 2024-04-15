@@ -14,6 +14,7 @@ import { ReviewComponent } from './review/review.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HotelListComponent } from './hotel-list/hotel-list.component';
 import { BookingListComponent } from './booking-list/booking-list.component';
+import { NewRegistrationComponent } from './new-registration/new-registration.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BookingListComponent } from './booking-list/booking-list.component';
     BookingComponent,
     ReviewComponent,
     HotelListComponent,
-    BookingListComponent
+    BookingListComponent,
+    NewRegistrationComponent
   ],
   imports: [
     BrowserModule,

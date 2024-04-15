@@ -1,11 +1,13 @@
 package com.metlife.booking.payload;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Admin
  */
 @Data
+@NoArgsConstructor
 public class GuestDTO {
 
 

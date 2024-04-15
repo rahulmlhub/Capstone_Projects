@@ -6,17 +6,19 @@ import { GuestComponent } from './guest/guest.component';
 import { BookingComponent } from './booking/booking.component';
 import { ReviewComponent } from './review/review.component';
 import { HotelListComponent } from './hotel-list/hotel-list.component';
-import { BookingListComponent } from './booking-list/booking-list.component';
+import { NewRegistrationComponent } from './new-registration/new-registration.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'hotel', component: HotelListComponent },
   { path: 'guest', component: GuestComponent },
   { path: 'booking', component: BookingComponent },
   { path: 'review', component: ReviewComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'booking-list', component: BookingComponent }
+  { path: 'booking-list', component: BookingComponent },
+  { path: 'new-registration', component: NewRegistrationComponent }
+
 ];
 
 @NgModule({

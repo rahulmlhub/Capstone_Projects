@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @Getter
 //@AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 public class HotelDTO {
 
 
