@@ -16,7 +16,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/reviews")
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class ReviewController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
@@ -28,7 +28,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO) {
         logger.info("Creating a new review");
         ReviewDTO createdReview = reviewService.createReview(reviewDTO);

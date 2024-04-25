@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,9 @@ export class LoginComponent {
 
   username: string | undefined;
   password: string | undefined;
+  errorMessage: string | undefined; // Variable to hold error message
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
   login() {
     // Define the request body
@@ -27,15 +29,15 @@ export class LoginComponent {
     });
   
     // Make the POST request to the backend
-    this.http.post<any>('http://localhost:8088/api/users/login', body)
+    this.http.post<any>('http://localhost:8080/api/users/login', body)
       .subscribe(
         (result: any) => {
           console.log('Login successful:', result);
-          if (result.token) {
-            localStorage.setItem("token", result.token);
+          if (result.jwtToken) {
+            localStorage.setItem("jwtToken", result.jwtToken);
           }
           // Redirect to another page or perform other actions after successful login
-          this.router.navigate(['/home']);
+           this.router.navigate(['/home']);
         },
         error => {
           console.error('Login failed:', error);
@@ -45,15 +47,12 @@ export class LoginComponent {
           } else {
             // Backend error
             console.error(`Backend returned code ${error.status}, body was: `, error.error);
+            // Set error message to display on the login page
+            this.errorMessage = 'Invalid username or password. Please try again.';
           }
           // Handle the error, show an error message, etc.
         }
       );
-  }
-
-  logout(){
-    localStorage.removeItem("token"); 
-    this.router.navigate(['/login']);
   }
   
 }

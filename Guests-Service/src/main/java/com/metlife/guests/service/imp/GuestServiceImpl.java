@@ -9,9 +9,11 @@ import com.metlife.guests.service.GuestService;
 /**
  * @author Admin
  */
+import com.metlife.guests.util.IdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 @Service
 public class GuestServiceImpl implements GuestService {
 
+    @Autowired
+    private IdGenerator idGenerator;
     private static final Logger logger = LoggerFactory.getLogger(GuestServiceImpl.class);
 
     private final GuestRepository guestRepository;
@@ -33,6 +37,7 @@ public class GuestServiceImpl implements GuestService {
         logger.info("Creating a new guest");
         Guest guest = new Guest();
         BeanUtils.copyProperties(guestDTO, guest);
+        guest.setGuestId(idGenerator.generateId());
         Guest savedGuest = guestRepository.save(guest);
         GuestDTO savedGuestDTO = new GuestDTO();
         BeanUtils.copyProperties(savedGuest, savedGuestDTO);

@@ -8,6 +8,7 @@ import com.metlife.hotel.payload.HotelDTO;
 import com.metlife.hotel.repository.FacilityRepository;
 import com.metlife.hotel.repository.HotelRepository;
 import com.metlife.hotel.service.HotelService;
+import com.metlife.hotel.util.IdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -36,6 +37,9 @@ public class HotelServiceImpl implements HotelService {
    @Autowired
    private FacilityRepository facilityRepository;
 
+   @Autowired
+   private IdGenerator idGenerator;
+
     public HotelServiceImpl(HotelRepository hotelRepository) {
         this.hotelRepository = hotelRepository;
     }
@@ -44,6 +48,11 @@ public class HotelServiceImpl implements HotelService {
     public HotelDTO createHotel(HotelDTO hotelDTO) {
         logger.info("Creating a new hotel");
         Hotel hotel = new Hotel();
+        logger.info("Creating a new hotel");
+        String hotelId = idGenerator.generateId();
+        System.out.println(hotelId);
+        logger.info("Automatic Id Generated {}",idGenerator);
+
         BeanUtils.copyProperties(hotelDTO, hotel);
         // Mapping facilities separately
         Set<Facility> facilities = new HashSet<>();
@@ -56,7 +65,7 @@ public class HotelServiceImpl implements HotelService {
         }
         List<Facility> facilities1 = facilityRepository.saveAll(facilities);
         hotel.setFacilities(facilities);
-
+        hotel.setHotelId(hotelId);
         Hotel savedHotel = hotelRepository.save(hotel);
         HotelDTO savedHotelDTO = new HotelDTO();
         BeanUtils.copyProperties(savedHotel, savedHotelDTO);
@@ -88,9 +97,19 @@ public class HotelServiceImpl implements HotelService {
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel not Found", "hotelId", hotelId));
         HotelDTO hotelDTO = new HotelDTO();
         BeanUtils.copyProperties(hotel, hotelDTO);
+        // Populate facilities in hotelDTO
+        Set<FacilityDTO> facilityDTOs = hotel.getFacilities().stream()
+                .map(facility -> {
+                    FacilityDTO facilityDTO = new FacilityDTO();
+                    BeanUtils.copyProperties(facility, facilityDTO);
+                    return facilityDTO;
+                })
+                .collect(Collectors.toSet());
+        hotelDTO.setFacilities(facilityDTOs); // Assuming you have a setter in HotelDTO
         logger.info("Hotel fetched successfully with ID: {}", hotelId);
         return hotelDTO;
     }
+
 
     @Override
     public List<HotelDTO> getAllHotel() {

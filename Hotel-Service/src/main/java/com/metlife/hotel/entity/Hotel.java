@@ -16,6 +16,7 @@ import java.util.Set;
 public class Hotel {
 
     @Id
+//    @GeneratedValue
     @Column(name = "hotel_id")
     private String hotelId;
 
@@ -31,7 +32,7 @@ public class Hotel {
 //    @Column(name = "image_path")
 //    private String imagePath;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "hotel_facility",
             joinColumns = @JoinColumn(name = "hotel_id"),
             inverseJoinColumns = @JoinColumn(name = "facility_id"))

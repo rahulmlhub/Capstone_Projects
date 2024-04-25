@@ -1,22 +1,26 @@
-<div>
+<app-navbar></app-navbar>
+<div class="table-div">
     <table class="table">
         <thead>
             <tr>
                 <th>Review ID</th>
                 <th>Booking ID</th>
-                <th>Guest ID</th>
                 <th>Rating</th>
                 <th>Comments</th>
+                <!-- <th>Action</th> -->
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let review of reviewsList">
                 <td>{{ review.reviewId}}</td>
-                <td>{{ review.guestId }}</td>
                 <td>{{ review.bookingId}}</td>
                 <td>{{ review.rating }}</td>
                 <td>{{ review.comment}}</td>
+                <!-- <button class="btn btn-info btn-sm" (click)="redirectToEdit(review)">Edit</button> -->
             </tr>
         </tbody>
     </table>
-</div>
+    <div >
+        <button class="btn btn-primary btn-sm  " routerLink="/add-review">Add Review</button>
+    </div>
+    </div>

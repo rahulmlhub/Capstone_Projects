@@ -1,17 +1,17 @@
-/* hotel-list.component.css */
-.hotel-list {
-    padding: 20px;
-    width: 30%;
-    display: grid;
+/* hotel-list.component.css */ .hotel-list {
+  border: 2px solid rgb(186, 216, 250);
+ 
   }
-  
+  /*
   .hotel {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    background-color: #8a88f0;
+    border: 1px  #472ae7;
+    border-radius: 25px;
     padding: 20px;
     margin-bottom: 20px;
     font-size: 12px;
+    border-width: 10px;
+    height: 200px;
   }
   
   .hotel h2 {
@@ -33,5 +33,22 @@
 
   .hotel-box{
 padding: 10px 20px;
+  } */
+  
+.form {
+  padding-left: 75%;
+}
+  .submit{
+    border-radius: 5px;
+    background-color: rgb(120, 120, 243);
+    border-width: 0px;
   }
+
+ .searchBox{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /* padding: 10px; */
+  }
+
+  
   

@@ -26,16 +26,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws
             UsernameNotFoundException {
-        System.out.println("loadUserByUsername");
         UserCredential userCredential = userCredentialRepository.findByUserName(usernameOrEmail)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found with username or email:" + usernameOrEmail));
         return new CustomUserDetails(userCredential);
     }
 
-    private Collection< ? extends GrantedAuthority>
-    mapRolesToAuthorities(Set<Roles> roles){
-        return roles.stream().map(role -> new
-                SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
+
 }

@@ -1,0 +1,11 @@
+<!-- hotel-popup.component.html -->
+<p class="title">Hotel Details</p>
+<div class="hotel-details" *ngIf="hotel">
+    <h2>{{ hotel.name }}</h2>
+    <p class="address">Address: {{ hotel.address }}</p>
+    <p class="phone">Phone Number: {{ hotel.phoneNumber }}</p>
+    <p class="facilities">Facilities:</p>
+    <ul class="facility-list">
+        <li *ngFor="let facility of hotel.facilities" class="facility">{{ facility.name }}</li>
+    </ul>
+</div>

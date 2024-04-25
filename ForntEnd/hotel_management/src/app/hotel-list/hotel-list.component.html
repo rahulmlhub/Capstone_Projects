@@ -1,20 +1,39 @@
-<!-- hotel-list.component.html -->
-<div>
-        <h6>Hotels</h6>
-        <div class="row">
-        <div class="col-md-3" *ngFor="let hotel of hotels">
-          <section class="hotel">
-            <h6>{{ hotel.name }}</h6>
-            <p>Address: {{ hotel.address }}</p>
-            <p>Phone Number: {{ hotel.phoneNumber }}</p>
-            <div *ngIf="hotel.facilities && hotel.facilities.length > 0">
-              <h6>Facilities:</h6>
-              <ul>
-                <li *ngFor="let facility of hotel.facilities">{{ facility.name }}</li>
-              </ul>
-            </div>
-          </section>
+<app-navbar></app-navbar>
+
+<form [formGroup]="searchForm" (ngSubmit)="filterHotels()" class="form searchBox">
+  <input type="text" name="searchText" placeholder="Search..." formControlName="searchKey">
+  &nbsp; &nbsp;
+  <button class="submit" type="submit">Search</button>
+</form>
+
+<table class="table hotel-list">
+  <thead>
+    <tr>
+      <th>Hotel ID</th>
+      <th>Hotel Name</th>
+      <th>Address</th>
+      <th>Phone Number</th>
+      <th>Facilities</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let hotel of filteredHotels">
+      <td>{{ hotel.hotelId }}</td>
+      <td>{{ hotel.name }}</td>
+      <td>{{ hotel.address }}</td>
+      <td>{{ hotel.phoneNumber }}</td>
+      <td>
+        <!-- <button class="more-button" (click)="toggleFacilities(hotel)">More</button> -->
+        <!-- <button class="more-button" [routerLink]="['/hotel-popup', hotel.hotelId]">More</button> -->
+        <button class="more-button" (click)="openPopup(hotel.hotelId)">More</button>
+        <div *ngIf="hotel.showFacilities">
+          <ul>
+            <li *ngFor="let facility of hotel.facilities">{{ facility.name }}</li>
+          </ul>
         </div>
-        </div>
-</div>
-  
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

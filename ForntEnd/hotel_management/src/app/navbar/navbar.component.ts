@@ -11,7 +11,8 @@ export class NavbarComponent {
   constructor(private router: Router) { }
 
   logout(): void {
-    localStorage.removeItem("token");
-    this.router.navigate(['/login']);
+    console.log("logout")
+    localStorage.removeItem("jwtToken");
+    this.router.navigate(['login']);
   }
 }

@@ -15,7 +15,7 @@ public interface HotelService {
     public List<HotelDTO> getAllHotelWithFacility();
     HotelDTO createHotel(HotelDTO hotelDTO);
     HotelDTO updateHotel(String hotelId, HotelDTO hotelDTO);
-    HotelDTO getHotelById(String hotelid);
+    HotelDTO getHotelById(String hotelId);
     List<HotelDTO> getAllHotel();
     void deleteHotelById(String hotelId);
 

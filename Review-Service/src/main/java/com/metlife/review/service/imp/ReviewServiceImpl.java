@@ -5,9 +5,11 @@ import com.metlife.review.exception.ResourceNotFoundException;
 import com.metlife.review.payload.ReviewDTO;
 import com.metlife.review.repository.ReviewRepository;
 import com.metlife.review.service.ReviewService;
+import com.metlife.review.util.IdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
+    @Autowired
+    private IdGenerator idGenerator;
     private static final Logger logger = LoggerFactory.getLogger(ReviewServiceImpl.class);
 
     private final ReviewRepository reviewRepository;
@@ -29,6 +33,7 @@ public class ReviewServiceImpl implements ReviewService {
         logger.info("Creating a new review");
         Review review = new Review();
         BeanUtils.copyProperties(reviewDTO, review);
+        review.setReviewId(idGenerator.generateId());
         Review savedReview = reviewRepository.save(review);
         ReviewDTO savedReviewDTO = new ReviewDTO();
         BeanUtils.copyProperties(savedReview, savedReviewDTO);

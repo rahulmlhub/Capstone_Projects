@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -14,8 +14,23 @@ export class BookingComponent implements OnInit {
   booking: any = {};
   guests: any[] = []; // Assuming you have a list of guests
   hotels: any[] = []; // Assuming you have a list of hotels
+  minDate: string;
+  maxDate: string;
+  datePipe: any;
 
-  constructor(private http: HttpClient , private router:Router) { }
+  constructor(private http: HttpClient , private formBuilder : FormBuilder , private router:Router) {
+    const today = new Date();
+    const thirtyDaysLater = new Date();
+    thirtyDaysLater.setDate(today.getDate() + 30);
+    this.minDate = this.formatDate(today);
+    this.maxDate = this.formatDate(thirtyDaysLater);
+  }
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
   ngOnInit(): void {
     // Fetch guests and hotels data when the component initializes
@@ -23,8 +38,14 @@ export class BookingComponent implements OnInit {
     this.fetchHotels();
     this.fetchBookingData();
   }
-  
+ 
   saveBooking() {
+    const token = localStorage.getItem('jwtToken');
+
+    // Set the Authorization header with the token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     // Assuming you have the data properly structured in your form
     const formData = {
       bookingId: this.booking.bookingId,
@@ -35,19 +56,32 @@ export class BookingComponent implements OnInit {
       checkOut: this.booking.checkOut
     };
 
-    this.http.post<any>('http://localhost:8084/api/bookings/create', formData)
+    this.http.post<any>('http://localhost:8080/api/bookings/create', formData, {headers:headers})
       .subscribe((response) => {
         console.log('Booking saved successfully:', response);
         // Clear form after successful submission
         this.booking = {};
-        this.router.navigate(['booking-list']);
+        this.fetchBookingData();
+        // Navigate to booking component (optional)
+        this.router.navigate(['booking']);
+
       }, (error) => {
         console.error('Error saving booking:', error);
       });
+      this.router.navigate(['booking']);
+
   }
 
   fetchGuests() {
-    this.http.get<any[]>('http://localhost:8082/api/guests')
+
+    const token = localStorage.getItem('jwtToken');
+
+    // Set the Authorization header with the token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    this.http.get<any[]>('http://localhost:8080/api/guests',{headers:headers})
       .subscribe((response) => {
         this.guests = response;
       }, (error) => {
@@ -56,7 +90,13 @@ export class BookingComponent implements OnInit {
   }
 
   fetchHotels() {
-    this.http.get<any[]>('http://localhost:8081/api/hotels')
+    const token = localStorage.getItem('jwtToken');
+
+    // Set the Authorization header with the token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    this.http.get<any[]>('http://localhost:8080/api/hotels',{headers:headers})
       .subscribe((response) => {
         this.hotels = response;
       }, (error) => {
@@ -65,7 +105,13 @@ export class BookingComponent implements OnInit {
   }
 
   fetchBookingData() {
-    this.http.get<any[]>('http://localhost:8084/api/bookings')
+    const token = localStorage.getItem('jwtToken');
+
+    // Set the Authorization header with the token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    this.http.get<any[]>('http://localhost:8080/api/bookings',{headers:headers})
       .subscribe(
         (data) => {
 
@@ -77,7 +123,7 @@ export class BookingComponent implements OnInit {
           console.error('Error fetching booking data:', error);
         }
       );
-      this.router.navigate(['booking-list']);
+      // this.router.navigate(['/booking']);
 
   }
   
@@ -92,8 +138,14 @@ export class BookingComponent implements OnInit {
   }
 
   updateBooking(booking: any) {
+    const token = localStorage.getItem('jwtToken');
+
+    // Set the Authorization header with the token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     // Implement update logic here, e.g., send PUT request to update the booking
-    this.http.put(`http://localhost:8084/api/bookings/update/${booking.bookingId}`, booking)
+    this.http.put(`http://localhost:8080/api/bookings/update/${booking.bookingId}`, booking,{headers:headers})
       .subscribe(
         (updatedBooking) => {
           console.log('Booking updated successfully:', updatedBooking);
@@ -113,17 +165,29 @@ export class BookingComponent implements OnInit {
   
 
   deleteBooking(bookingId: string) {
-    this.http.delete(`http://localhost:8084/api/bookings/delete/${bookingId}`)
+    const token = localStorage.getItem('jwtToken');
+
+    // Set the Authorization header with the token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    this.http.delete(`http://localhost:8080/api/bookings/delete/${bookingId}`,{headers:headers})
       .subscribe(
         () => {
           console.log('Booking deleted successfully');
           // Filter out the deleted record from the bookingLists array
           this.bookingLists = this.bookingLists.filter(booking => booking.bookingId !== bookingId);
+          this.fetchBookingData();
+          // Navigate to booking component (optional)
+          this.router.navigate(['booking']);
+
         },
         (error) => {
           console.error('Error deleting booking:', error);
         }
       );
+      this.router.navigate(['booking']);
+
   }
 
 }

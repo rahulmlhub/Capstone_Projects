@@ -1,0 +1,12 @@
+.table-div{
+    padding-top: 30px;
+}
+
+td{
+/* background-color: rgb(171, 169, 240); */
+}
+
+th{
+    /* background-color: rgb(74, 71, 223); */
+    border-bottom: 1px solid #ddd;
+}

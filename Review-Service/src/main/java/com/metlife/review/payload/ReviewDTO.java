@@ -12,7 +12,6 @@ import lombok.Setter;
 public class ReviewDTO {
     private String reviewId;
     private String bookingId;
-    private String guestId;
     private int rating;
     private String comment;
 }

@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableGlobalAuthentication
 public class SecurityConfig {
 
     @Autowired
@@ -36,9 +38,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                .requestMatchers("/auth/register").permitAll()
                 .requestMatchers("/api/users/**").permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().hasRole("ADMIN")
+                .requestMatchers("/api/hotels/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement()

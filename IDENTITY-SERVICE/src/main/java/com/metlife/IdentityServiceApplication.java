@@ -19,4 +19,7 @@ public class IdentityServiceApplication {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+
+
 }

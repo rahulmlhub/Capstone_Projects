@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
     @Autowired
@@ -52,13 +52,9 @@ public class AuthController {
     private void doAuthenticate(String email, String password) {
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
-        System.out.println("checkpoint");
-        try {
-            System.out.println("checkpoint1"+authentication.getName());
-            System.out.println("checkpoint1"+authentication.isAuthenticated());
-//            manager.authenticate(authentication);
-            System.out.println("checkpoint2");
 
+        try {
+            manager.authenticate(authentication);
 
         } catch (BadCredentialsException e) {
             throw new BadCredentialsException(" Invalid Username or Password  !!");
@@ -66,14 +62,9 @@ public class AuthController {
 
     }
 
-    @GetMapping("/hello")
-    public String say(){
-        return "Hello";
-    }
-
     @ExceptionHandler(BadCredentialsException.class)
-    public String exceptionHandler() {
-        return "Credentials Invalid !!";
+    public ResponseEntity<String> exceptionHandler() {
+        return new ResponseEntity<>("Credentials Invalid !!", HttpStatus.BAD_REQUEST);
     }
 
 }

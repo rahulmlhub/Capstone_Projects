@@ -34,6 +34,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 String authHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
                 if (authHeader != null && authHeader.startsWith("Bearer ")) {
                     authHeader = authHeader.substring(7);
+                    System.out.println("authHeader"+authHeader);
                 }
                 try {
 //                    //REST call to AUTH service

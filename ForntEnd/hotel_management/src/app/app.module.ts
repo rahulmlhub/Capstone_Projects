@@ -11,10 +11,17 @@ import { HotelComponent } from './hotel/hotel.component';
 import { GuestComponent } from './guest/guest.component';
 import { BookingComponent } from './booking/booking.component';
 import { ReviewComponent } from './review/review.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { HotelListComponent } from './hotel-list/hotel-list.component';
 import { BookingListComponent } from './booking-list/booking-list.component';
 import { NewRegistrationComponent } from './new-registration/new-registration.component';
+import { AuthInterceptor } from './auth.interceptor';
+import { AddReviewComponent } from './add-review/add-review.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HotelPopupComponent } from './hotel-popup/hotel-popup.component';
+
+
 
 @NgModule({
   declarations: [
@@ -28,7 +35,9 @@ import { NewRegistrationComponent } from './new-registration/new-registration.co
     ReviewComponent,
     HotelListComponent,
     BookingListComponent,
-    NewRegistrationComponent
+    NewRegistrationComponent,
+    AddReviewComponent,
+    HotelPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +45,13 @@ import { NewRegistrationComponent } from './new-registration/new-registration.co
     RouterModule, // Make sure RouterModule is imported here
     AppRoutingModule, // Import your routing module here
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
