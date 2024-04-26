@@ -31,7 +31,7 @@
     <div class="form-group">
       <label for="role">Role:</label>
       <select formControlName="role" class="form-control">
-        <option value="ROLE_USER">User</option>
+        <!-- <option value="ROLE_USER">User</option> -->
         <option value="ROLE_ADMIN">Admin</option>
       </select>
       <div *ngIf="registerForm.get('role')?.hasError('required') && registerForm.get('role')?.touched" class="error-message">
